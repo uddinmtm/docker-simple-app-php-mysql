@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+        - env:
+            - name: DB_DATABASE
+              value: dummy_db
+            - name: DB_HOST
+              value: db
+            - name: DB_PASSWORD
+              value: passdb
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: userdb
+          image: uddinmtm/phpmysql
+          name: web
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}
